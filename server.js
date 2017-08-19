@@ -13,10 +13,10 @@ require('./app/config/passport')(passport);
 mongoose.connect(process.env.MONGO_URI);
 mongoose.Promise = global.Promise;
 
-app.use('/', express.static(process.cwd() + '/public'));
+app.use('/public', express.static(process.cwd() + '/public'));
 
 app.use(session({
-	secret: 'secretClementine',
+	secret: process.env.PASSPORT_SECRET,
 	resave: false,
 	saveUninitialized: true
 }));
