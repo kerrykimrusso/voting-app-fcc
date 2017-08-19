@@ -8,11 +8,23 @@ var User = new Schema({
 		id: String,
 		displayName: String,
 		username: String,
-      publicRepos: Number
+        publicRepos: Number
 	},
-   nbrClicks: {
-      clicks: Number
-   }
+	responses: [{
+	    poll: {
+	        type: Schema.Types.ObjectId,
+	        ref: 'Poll'
+	    },
+	    answer: {
+	        type: String,
+	        trim: true,
+	        required: true
+	    }
+	}],
+    polls_authored: [{
+        type: Schema.Types.ObjectId, 
+        ref: 'Poll'
+    }]
 });
 
 module.exports = mongoose.model('User', User);
