@@ -9,25 +9,27 @@ const pollSchema = new Schema({
         ref: 'User'
     },
     question: {
-        type: String,
-        trim: true,
-        required: true
-    },
-    responses: [{
-        answer: {
+        text: {
             type: String,
+            trim: true,
             required: true
         },
-        count: {
-            type: Number,
-            default: 0
-        }
-    }]
+        choices: [{
+            text: {
+                type: String,
+                required: true
+            },
+            votes: {
+                type: Number,
+                default: 0
+            }
+        }]
+    }
 });
 
-pollSchema.virtual('totalResponses').get(function() {
-    return this.responses.reduce((accumulator, response) => {
-        return accumulator + response.count;
+pollSchema.virtual('totalVotes').get(function() {
+    return this.question.choices.reduce((accumulator, choice) => {
+        return accumulator + choice.votes;
     }, 0);
 });
 

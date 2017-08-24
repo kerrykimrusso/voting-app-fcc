@@ -6,6 +6,7 @@ const pollRoutes = require('./poll.routes');
 module.exports = function (app, passport) {
 
 	function isLoggedIn (req, res, next) {
+		return next();
 		if (req.isAuthenticated()) {
 			return next();
 		} else {
@@ -48,5 +49,5 @@ module.exports = function (app, passport) {
 			failureRedirect: '/login'
 		}));
 	
-	app.use('/api/polls/', pollRoutes)
+	app.use('/api/polls/', isLoggedIn, pollRoutes);
 };
